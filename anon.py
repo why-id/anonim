@@ -1,10 +1,12 @@
+# Coded by why-id
+# GresiXploiter
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import threading
 import time
 
 # Token dari BotFather
-TOKEN = '7495609450:AAHB5EgAF89iUnFu6ymX2uqYbwAJvXjTbbk'
+TOKEN = 'token'
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -71,7 +73,7 @@ def stop(message):
     else:
         bot.send_message(message.chat.id, '𝘈𝘯𝘥𝘢 𝘣𝘦𝘭𝘶𝘮 𝘵𝘦𝘳𝘩𝘶𝘣𝘶𝘯𝘨 𝘥𝘦𝘯𝘨𝘢𝘯 𝘱𝘢𝘳𝘵𝘯𝘦𝘳')
 
-# Function to delete confirmation message after a delay
+# Fungsi Hapus
 def delete_confirmation_message(chat_id, message_id, delay):
     time.sleep(delay)
     try:
@@ -90,7 +92,7 @@ def hapus(message):
                 bot.delete_message(chat_id=partner_id, message_id=message_id)
             sent_message = bot.send_message(user_id, '𝘚𝘦𝘮𝘶𝘢 𝘱𝘦𝘴𝘢𝘯 𝘥𝘦𝘯𝘨𝘢𝘯 𝘱𝘢𝘳𝘵𝘯𝘦𝘳 𝘵𝘦𝘭𝘢𝘩 𝘵𝘦𝘳𝘩𝘢𝘱𝘶𝘴')
             pesan_terkirim[user_id] = []
-            # Delete confirmation message after 5 seconds
+            # Hapus dalam 5 Detik
             threading.Thread(target=delete_confirmation_message, args=(user_id, sent_message.message_id, 5)).start()
         except Exception as e:
             bot.send_message(user_id, f'Gagal menghapus pesan: {str(e)}')
