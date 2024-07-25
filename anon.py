@@ -1,13 +1,32 @@
-# Coded by why-id
-# GresiXploiter
+import os
+import time
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import threading
-import time
+import sys
+
+logo = """
+\033[92m
+      .---.        .-----------
+     /     \  __  /    ------
+    / /     \(  )/    -----
+   //////   ' \/ `   ---
+  //// / // : GX : ---
+ // /   /  /`    '--
+//          //..\\    </GresiXploit Tools>
+       ====UU====UU==========================
+           '//||\\`
+             ''``
+\033[0m"""
+
+def clear_screen():
+    os.system('clear')
+
+clear_screen()
+print(logo)
 
 # Token dari BotFather
-TOKEN = 'token'
-
+TOKEN = 'Token{""}'
 bot = telebot.TeleBot(TOKEN)
 
 # Menyimpan pasangan chat
@@ -19,9 +38,9 @@ pesan_menunggu = {}
 # Membuat custom keyboard yang dinamis
 def buat_keyboard():
     markup = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    cari_button = KeyboardButton('🚀 ғɪɴᴅ ᴀ ᴘᴀʀᴛɴᴇʀ')
-    stop_button = KeyboardButton('⛔️ ʟᴇᴀᴠᴇ ᴘᴀʀᴛɴᴇʀ')
-    hapus_button = KeyboardButton('❌ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ᴄʜᴀᴛ')
+    cari_button = KeyboardButton('𝘤𝘢𝘳𝘪')
+    stop_button = KeyboardButton('𝘵𝘪𝘯𝘨𝘨𝘢𝘭𝘬𝘢𝘯')
+    hapus_button = KeyboardButton('𝘩𝘢𝘱𝘶𝘴 𝘤𝘩𝘢𝘵')
     markup.add(cari_button, stop_button, hapus_button)
     return markup
 
@@ -29,10 +48,11 @@ def buat_keyboard():
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = buat_keyboard()
-    bot.send_message(message.chat.id, "𝘚𝘦𝘭𝘢𝘮𝘢𝘵 𝘥𝘢𝘵𝘢𝘯𝘨,\n𝘜𝘯𝘵𝘶𝘬 𝘮𝘦𝘯𝘦𝘮𝘶𝘬𝘢𝘯 𝘱𝘢𝘳𝘵𝘯𝘦𝘳 𝘬𝘭𝘪𝘬 𝘱𝘢𝘥𝘢 𝘱𝘪𝘭𝘪𝘩𝘢𝘯 𝘮𝘦𝘯𝘶", reply_markup=markup)
+    bot.send_message(message.chat.id, "𝘱𝘪𝘭𝘪𝘩𝘢𝘯 𝘢𝘥𝘢 𝘥𝘪 𝘮𝘦𝘯𝘶", reply_markup=markup)
+    print(f"@{message.chat.username}")
 
 # Handler untuk perintah Cari
-@bot.message_handler(func=lambda message: message.text == '🚀 ғɪɴᴅ ᴀ ᴘᴀʀᴛɴᴇʀ')
+@bot.message_handler(func=lambda message: message.text == '𝘤𝘢𝘳𝘪')
 def cari(message):
     user_id = message.chat.id
     if user_id in pasangan:
@@ -60,7 +80,7 @@ def cari(message):
         daftar_tunggu.append(user_id)
 
 # Handler untuk perintah Stop untuk memutuskan koneksi
-@bot.message_handler(func=lambda message: message.text == '⛔️ ʟᴇᴀᴠᴇ ᴘᴀʀᴛɴᴇʀ')
+@bot.message_handler(func=lambda message: message.text == '𝘵𝘪𝘯𝘨𝘨𝘢𝘭𝘬𝘢𝘯')
 def stop(message):
     user_id = message.chat.id
     if user_id in pasangan:
@@ -82,7 +102,7 @@ def delete_confirmation_message(chat_id, message_id, delay):
         pass
 
 # Handler untuk perintah Hapus untuk menghapus semua pesan yang dikirimkan
-@bot.message_handler(func=lambda message: message.text == '❌ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ᴄʜᴀᴛ')
+@bot.message_handler(func=lambda message: message.text == '𝘩𝘢𝘱𝘶𝘴 𝘤𝘩𝘢𝘵')
 def hapus(message):
     user_id = message.chat.id
     if user_id in pasangan and user_id in pesan_terkirim:
@@ -127,4 +147,7 @@ def message_handler(message):
         bot.send_message(message.chat.id, '𝘈𝘯𝘥𝘢 𝘣𝘦𝘭𝘶𝘮 𝘵𝘦𝘳𝘩𝘶𝘣𝘶𝘯𝘨 𝘥𝘦𝘯𝘨𝘢𝘯 𝘱𝘢𝘳𝘵𝘯𝘦𝘳')
 
 if __name__ == '__main__':
-    bot.polling()
+    try:
+        bot.polling()
+    except KeyboardInterrupt:
+        sys.exit()
